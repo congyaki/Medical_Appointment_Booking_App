@@ -1,16 +1,15 @@
 import 'package:doctor_app/models/AppointmentVM.dart';
+import 'package:doctor_app/models/AuthenticationVM.dart';
+import 'package:doctor_app/models/DoctorVM.dart';
 import 'package:doctor_app/models/LoginVM.dart';
+import 'package:doctor_app/models/SpecializationVM.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import '../models/DoctorVM.dart';
-import '../models/SpecializationVM.dart';
-
 class ApiService {
-  static const String baseUrl = 'https://localhost:7259/api';
+  static const String baseUrl = 'https://ef05-118-70-125-13.ngrok-free.app/api';
 
-
-  Future<void> login(LoginVM loginVM) async {
+  Future<AuthenticationVM> login(LoginVM loginVM) async {
     final url = Uri.parse('$baseUrl/User/token');
     final response = await http.post(
       url,
@@ -18,10 +17,15 @@ class ApiService {
       body: jsonEncode(loginVM.toJson()),
     );
 
-    if (response.statusCode == 200) {
-      // Xử lý phản hồi thành công
+    if (response.statusCode >= 200) {
+      final Map<String, dynamic> responseData = jsonDecode(response.body);
+      return AuthenticationVM.fromJson(responseData);
     } else {
-      throw Exception('Failed to login');
+      final Map<String, dynamic> errorData = jsonDecode(response.body);
+      return AuthenticationVM(
+        isAuthenticated: false,
+        message: errorData['message'] ?? 'Failed to login',
+      );
     }
   }
 
@@ -33,7 +37,7 @@ class ApiService {
       List jsonResponse = json.decode(response.body);
       return jsonResponse.map((data) => SpecializationVM.fromJson(data)).toList();
     } else {
-      throw Exception('Failed to load specializations');
+      throw Exception('Failed to load specializations: ${response.reasonPhrase}');
     }
   }
 
@@ -45,12 +49,12 @@ class ApiService {
       List jsonResponse = json.decode(response.body);
       return jsonResponse.map((data) => DoctorVM.fromJson(data)).toList();
     } else {
-      throw Exception('Failed to load doctors');
+      throw Exception('Failed to load doctors: ${response.reasonPhrase}');
     }
   }
 
   Future<void> createAppointment(AppointmentVM appointmentVM) async {
-    final url = Uri.parse('$baseUrl/Appointment');
+    final url = Uri.parse('$baseUrl/Appointments');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -58,9 +62,9 @@ class ApiService {
     );
 
     if (response.statusCode == 201) {
-      // Xử lý phản hồi thành công
+      // Handle successful response
     } else {
-      throw Exception('Failed to create appointment');
+      throw Exception('Failed to create appointment: ${response.reasonPhrase}');
     }
   }
 }

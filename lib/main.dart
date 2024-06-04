@@ -1,36 +1,54 @@
-import 'package:doctor_app/screens/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
-
-import 'constants.dart';
+import 'package:doctor_app/screens/login.dart';
+import 'package:doctor_app/screens/specializations.dart';
+import 'package:doctor_app/screens/home.dart';
+import 'package:doctor_app/screens/doctor.dart'; // Giả định rằng bạn có một màn hình Doctor
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Healthcare - Doctor Consultation App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        primaryColor: primaryColor,
-        textTheme: Theme.of(context).textTheme.apply(displayColor: textColor),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: TextButton.styleFrom(
-            backgroundColor: primaryColor,
-            padding: EdgeInsets.all(defaultPadding),
-          ),
-        ),
-        inputDecorationTheme: InputDecorationTheme(
-          border: textFieldBorder,
-          enabledBorder: textFieldBorder,
-          focusedBorder: textFieldBorder,
-        ),
-      ),
-      home: WelcomeScreen(),
+      title: 'YourHealth',
+      initialRoute: '/',
+      routes: {
+        '/': (context) => SplashScreen(),
+        '/login': (context) => LoginScreen(),
+        '/home': (context) => HomeScreen(),
+        '/specializations': (context) => SpecializationsScreen(),
+      },
     );
+  }
+}
+
+class SplashScreen extends StatelessWidget {
+  final _storage = FlutterSecureStorage(); // Thêm dòng này để khởi tạo _storage
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: _checkAuthentication(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator()); // Bổ sung Center để căn giữa
+        } else {
+          if (snapshot.data == true) {
+            return HomeScreen();
+          } else {
+            return LoginScreen();
+          }
+        }
+      },
+    );
+  }
+
+  // Hàm kiểm tra xác thực
+  Future<bool> _checkAuthentication() async {
+    final token = await _storage.read(key: 'token');
+    return token != null;
   }
 }

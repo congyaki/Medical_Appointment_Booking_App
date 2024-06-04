@@ -19,7 +19,7 @@ class LoginVM {
   Map<String, dynamic> toJson() {
     return {
       'email': email,
-      'password': password,
+      'password': password
     };
   }
 }
