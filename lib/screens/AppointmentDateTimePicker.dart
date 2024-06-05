@@ -52,8 +52,14 @@ class _AppointmentDateTimePickerState extends State<AppointmentDateTimePicker> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select Appointment Date and Time'),
-        backgroundColor: Color(0xFF00C0FF), // Màu chủ đạo của ứng dụng
+        title: Text(
+          'Select Appointment Date and Time',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: Color(0xFF00C0FF),
       ),
       body: Center(
         child: Padding(
@@ -61,44 +67,38 @@ class _AppointmentDateTimePickerState extends State<AppointmentDateTimePicker> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              CircleAvatar(
-                backgroundImage: NetworkImage(widget.doctor.avatar),
-                radius: 50,
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () => _selectDate(context),
-                child: Text('Select Date'),
-              ),
-              SizedBox(height: 20),
-              Text('Selected Date: ${_selectedDate.toString().substring(0, 10)}'),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () => _selectTime(context),
-                child: Text('Select Time'),
-              ),
-              SizedBox(height: 20),
-              Text('Selected Time: ${_selectedTime.format(context)}'),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PatientRecordScreen(
-                        doctor: widget.doctor,
-                        selectedDate: '${_selectedDate.year}-${_selectedDate.month.toString().padLeft(2, '0')}-${_selectedDate.day.toString().padLeft(2, '0')}',
-                        selectedTime: '${_selectedTime.hour}:${_selectedTime.minute}:00',
-                      ),
-                    ),
-                  );
-                },
-                child: Text(
-                  'Confirm Appointment',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+              Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
                 ),
-                style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF00C0FF), // Màu chủ đạo của ứng dụng
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      _buildDateTimeButton(
+                        onPressed: () => _selectDate(context),
+                        icon: Icons.calendar_today,
+                        label: 'Select Date',
+                      ),
+                      SizedBox(height: 20),
+                      _buildSelectedDateTimeText(
+                        text: 'Selected Date: ${_selectedDate.toString().substring(0, 10)}',
+                      ),
+                      SizedBox(height: 20),
+                      _buildDateTimeButton(
+                        onPressed: () => _selectTime(context),
+                        icon: Icons.access_time,
+                        label: 'Select Time',
+                      ),
+                      SizedBox(height: 20),
+                      _buildSelectedDateTimeText(
+                        text: 'Selected Time: ${_selectedTime.format(context)}',
+                      ),
+                      SizedBox(height: 20),
+                      _buildConfirmAppointmentButton(),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -107,5 +107,59 @@ class _AppointmentDateTimePickerState extends State<AppointmentDateTimePicker> {
       ),
     );
   }
-}
 
+  Widget _buildDateTimeButton({
+    required VoidCallback onPressed,
+    required IconData icon,
+    required String label,
+  }) {
+    return ElevatedButton.icon(
+      onPressed: onPressed,
+      icon: Icon(icon),
+      label: Text(label),
+      style: ElevatedButton.styleFrom(
+        primary: Color(0xFF00C0FF),
+        onPrimary: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSelectedDateTimeText({required String text}) {
+    return Text(
+      text,
+      style: TextStyle(fontSize: 16, color: Colors.black54),
+    );
+  }
+
+  Widget _buildConfirmAppointmentButton() {
+    return ElevatedButton.icon(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PatientRecordScreen(
+              doctor: widget.doctor,
+              selectedDate: '${_selectedDate.year}-${_selectedDate.month.toString().padLeft(2, '0')}-${_selectedDate.day.toString().padLeft(2, '0')}',
+              selectedTime: '${_selectedTime.hour}:${_selectedTime.minute}:00',
+            ),
+          ),
+        );
+      },
+      icon: Icon(Icons.check),
+      label: Text(
+        'Confirm Appointment',
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      style: ElevatedButton.styleFrom(
+        primary: Color(0xFF00C0FF),
+        onPrimary: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+      ),
+    );
+  }
+}
