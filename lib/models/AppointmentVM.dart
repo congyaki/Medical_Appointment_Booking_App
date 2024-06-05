@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
-
 class AppointmentVM {
   final int patientRecordId;
   final int doctorId;
-  final DateTime date;
-  final TimeOfDay time;
+  final String date; // Thay đổi kiểu dữ liệu từ DateTime thành String
+  final String time; // Thay đổi kiểu dữ liệu từ TimeOfDay thành String
 
   AppointmentVM({
     required this.patientRecordId,
@@ -17,11 +15,8 @@ class AppointmentVM {
     return AppointmentVM(
       patientRecordId: json['patientRecordId'],
       doctorId: json['doctorId'],
-      date: DateTime.parse(json['date']),
-      time: TimeOfDay(
-        hour: int.parse(json['time'].split(':')[0]),
-        minute: int.parse(json['time'].split(':')[1]),
-      ),
+      date: json['date'],
+      time: json['time'],
     );
   }
 
@@ -29,8 +24,8 @@ class AppointmentVM {
     return {
       'patientRecordId': patientRecordId,
       'doctorId': doctorId,
-      'date': date.toIso8601String(),
-      'time': '${time.hour}:${time.minute}',
+      'date': date, // Không cần chuyển đổi định dạng
+      'time': time, // Không cần chuyển đổi định dạng
     };
   }
 }

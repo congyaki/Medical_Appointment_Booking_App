@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:doctor_app/api/api_service.dart';
 import 'package:doctor_app/models/LoginVM.dart';
 import 'package:doctor_app/models/AuthenticationVM.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -10,11 +11,17 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  String _email = 'duccong29092003@gmail.com'; // Giá trị mặc định cho email
+  String _email = '';
   String _password = '';
   final ApiService _apiService = ApiService();
   bool _isLoading = false;
-  final TextEditingController _emailController = TextEditingController(text: 'duccong29092003@gmail.com');
+
+  Future<void> _saveToken(String? token) async {
+    if (token != null) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('token', token);
+    }
+  }
 
   void _submit() async {
     if (_formKey.currentState!.validate()) {
@@ -30,6 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
         });
 
         if (authResult.isAuthenticated) {
+          await _saveToken(authResult.token); // Lưu token vào thiết bị
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Login successful!')),
           );
@@ -62,7 +70,6 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               TextFormField(
-                controller: _emailController, // Thiết lập giá trị mặc định cho email
                 decoration: InputDecoration(labelText: 'Email'),
                 validator: (value) => value!.isEmpty ? 'Please enter email' : null,
                 onSaved: (value) => _email = value!,

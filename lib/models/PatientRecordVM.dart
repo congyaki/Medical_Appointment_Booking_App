@@ -1,4 +1,5 @@
 class PatientRecordVM {
+  final int id;
   final int customerId;
   final String firstName;
   final String lastName;
@@ -9,6 +10,7 @@ class PatientRecordVM {
   final String email;
 
   PatientRecordVM({
+    required this.id,
     required this.customerId,
     required this.firstName,
     required this.lastName,
@@ -21,6 +23,7 @@ class PatientRecordVM {
 
   factory PatientRecordVM.fromJson(Map<String, dynamic> json) {
     return PatientRecordVM(
+      id: json['id'],
       customerId: json['customerId'],
       firstName: json['firstName'],
       lastName: json['lastName'],

@@ -1,6 +1,6 @@
-import 'package:doctor_app/screens/ConfirmAppointment.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_app/models/DoctorBasicVM.dart';
+import 'package:doctor_app/screens/PatientRecords.dart';
 
 class AppointmentDateTimePicker extends StatefulWidget {
   final DoctorBasicVM doctor;
@@ -79,10 +79,10 @@ class _AppointmentDateTimePickerState extends State<AppointmentDateTimePicker> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ConfirmAppointmentScreen(
+                    builder: (context) => PatientRecordScreen(
                       doctor: widget.doctor,
-                      selectedDate: _selectedDate,
-                      selectedTime: _selectedTime,
+                      selectedDate: '${_selectedDate.year}-${_selectedDate.month.toString().padLeft(2, '0')}-${_selectedDate.day.toString().padLeft(2, '0')}',
+                      selectedTime: '${_selectedTime.hour}:${_selectedTime.minute}:00',
                     ),
                   ),
                 );

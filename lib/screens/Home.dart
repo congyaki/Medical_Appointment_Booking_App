@@ -1,5 +1,5 @@
-import 'package:doctor_app/screens/Login.dart';
 import 'package:flutter/material.dart';
+import 'package:doctor_app/screens/login.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -33,14 +33,13 @@ class HomeScreen extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () async {
-                // Xử lý sự kiện khi nhấn nút "Bắt đầu đặt lịch"
-                // Kiểm tra đăng nhập và chuyển hướng tới trang đăng nhập nếu cần
-                final isAuthenticated = await Navigator.push<bool>(
+                // Kiểm tra đăng nhập, nếu chưa đăng nhập thì chuyển tới trang đăng nhập
+                final isAuthenticated = await Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => LoginScreen()),
                 );
                 if (isAuthenticated != null && isAuthenticated) {
-                  // Người dùng đã đăng nhập, chuyển hướng đến trang chọn specialization
+                  // Nếu đăng nhập thành công, chuyển hướng tới trang chọn chuyên khoa
                   Navigator.pushNamed(context, '/specializations');
                 }
               },
