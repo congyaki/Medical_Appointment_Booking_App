@@ -1,5 +1,6 @@
-import 'package:doctor_app/models/DoctorBasicVM.dart';
+import 'package:doctor_app/screens/ConfirmAppointment.dart';
 import 'package:flutter/material.dart';
+import 'package:doctor_app/models/DoctorBasicVM.dart';
 
 class AppointmentDateTimePicker extends StatefulWidget {
   final DoctorBasicVM doctor;
@@ -11,8 +12,15 @@ class AppointmentDateTimePicker extends StatefulWidget {
 }
 
 class _AppointmentDateTimePickerState extends State<AppointmentDateTimePicker> {
-  DateTime _selectedDate = DateTime.now();
-  TimeOfDay _selectedTime = TimeOfDay.now();
+  late DateTime _selectedDate;
+  late TimeOfDay _selectedTime;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedDate = DateTime.now();
+    _selectedTime = TimeOfDay.now();
+  }
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
@@ -66,10 +74,18 @@ class _AppointmentDateTimePickerState extends State<AppointmentDateTimePicker> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-
-
                 // Xử lý khi người dùng xác nhận ngày và giờ
                 // Ví dụ: gọi hàm để tạo cuộc hẹn với ngày và giờ đã chọn
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ConfirmAppointmentScreen(
+                      doctor: widget.doctor,
+                      selectedDate: _selectedDate,
+                      selectedTime: _selectedTime,
+                    ),
+                  ),
+                );
               },
               child: Text('Confirm Appointment'),
             ),

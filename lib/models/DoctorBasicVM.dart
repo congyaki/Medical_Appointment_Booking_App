@@ -3,12 +3,14 @@ class DoctorBasicVM {
   final int experience;
   final String avatar;
   final String fullName;
+  final String specializationName;
 
   DoctorBasicVM({
     required this.id,
     required this.experience,
     required this.avatar,
     required this.fullName,
+    required this.specializationName,
   });
 
   factory DoctorBasicVM.fromJson(Map<String, dynamic> json) {
@@ -17,6 +19,7 @@ class DoctorBasicVM {
       experience: json['experience'],
       avatar: json['avatar'],
       fullName: json['fullName'],
+      specializationName: json['specializationName'],
     );
   }
 
@@ -26,6 +29,7 @@ class DoctorBasicVM {
       'experience': experience,
       'avatar': avatar,
       'fullName': fullName,
+      'specializationName': specializationName,
     };
   }
 }

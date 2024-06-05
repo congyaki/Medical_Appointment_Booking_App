@@ -3,14 +3,12 @@ import 'package:doctor_app/models/DoctorBasicVM.dart';
 
 class ConfirmAppointmentScreen extends StatelessWidget {
   final DoctorBasicVM doctor;
-  final String specialization;
   final DateTime selectedDate;
   final TimeOfDay selectedTime;
 
   const ConfirmAppointmentScreen({
     Key? key,
     required this.doctor,
-    required this.specialization,
     required this.selectedDate,
     required this.selectedTime,
   }) : super(key: key);
@@ -31,11 +29,11 @@ class ConfirmAppointmentScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Text(
-              'Specialization: $specialization',
+              'Doctor: ${doctor.fullName}',
               style: TextStyle(fontSize: 16),
             ),
             Text(
-              'Doctor: ${doctor.fullName}',
+              'Specialization: ${doctor.specializationName}',
               style: TextStyle(fontSize: 16),
             ),
             Text(
