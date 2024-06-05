@@ -3,6 +3,7 @@ import 'package:doctor_app/screens/ConfirmAppointment.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_app/api/api_service.dart';
 import 'package:doctor_app/models/PatientRecordVM.dart';
+import 'package:intl/intl.dart';
 
 class PatientRecordScreen extends StatefulWidget {
   final DoctorBasicVM doctor;
@@ -92,7 +93,7 @@ class _PatientRecordScreenState extends State<PatientRecordScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Date of Birth: ${patientRecord.dateOfBirth}'),
+                          Text('Date of Birth: ${DateFormat('yyyy/MM/dd').format(patientRecord.dateOfBirth)}'),
                           Text('Gender: ${patientRecord.gender}'),
                           Text('Address: ${patientRecord.address}'),
                           Text('Phone Number: ${patientRecord.phoneNumber}'),

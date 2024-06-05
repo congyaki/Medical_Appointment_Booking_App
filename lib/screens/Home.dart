@@ -9,7 +9,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'YourHealth',
+          'HealthMed',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -18,16 +18,60 @@ class HomeScreen extends StatelessWidget {
         ),
         backgroundColor: Color(0xFF00C0FF),
         elevation: 0,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.notifications_none, color: Colors.white),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.menu, color: Colors.white),
-          ),
-        ],
+        iconTheme: IconThemeData(color: Colors.white),
+        // Remove the actions from the app bar
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Color(0xFF00C0FF),
+              ),
+              child: Text(
+                'Menu',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              title: Text('Profile'),
+              onTap: () {
+                // Navigate to the profile page
+                Navigator.pop(context); // Close the drawer
+                // Add navigation logic here
+              },
+            ),
+            ListTile(
+              title: Text('Appointment'),
+              onTap: () {
+                // Navigate to the appointment page
+                Navigator.pop(context); // Close the drawer
+                // Add navigation logic here
+              },
+            ),
+            ListTile(
+              title: Text('Login'),
+              onTap: () async {
+                final SharedPreferences prefs = await SharedPreferences.getInstance();
+                final bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+                if (isLoggedIn) {
+                  // Log out logic
+                  prefs.setBool('isLoggedIn', false); // Set isLoggedIn to false
+                  // Navigate to the home page or any other appropriate page after logout
+                  Navigator.pop(context); // Close the drawer
+                  // Add navigation logic here
+                } else {
+                  // Navigate to the login page
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                }
+              },
+            ),
+          ],
+        ),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20),
@@ -36,9 +80,9 @@ class HomeScreen extends StatelessWidget {
           children: [
             SizedBox(height: 20),
             Text(
-              'Welcome to YourHealth',
+              'Welcome to HealthMed',
               style: TextStyle(
-                fontSize: 28,
+                fontSize: 26,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF00C0FF),
               ),
@@ -145,6 +189,33 @@ class HomeScreen extends StatelessWidget {
             _buildHealthTipCard('Exercise Regularly', 'Engage in physical activities for at least 30 minutes a day...'),
             SizedBox(height: 30),
             Text(
+              'Blog',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF00C0FF),
+              ),
+            ),
+            SizedBox(height: 10),
+            _buildBlogPost(
+              '10 Tips for a Healthy Lifestyle',
+              'Follow these simple tips to maintain a healthy lifestyle...',
+              'assets/images/blog1.jpg',
+            ),
+            _buildBlogPost(
+              'Understanding Mental Health',
+              'Learn about the importance of mental health and how to take care of it...',
+              'assets/images/blog2.png',
+            ),
+            _buildBlogPost(
+              'The Benefits of Regular Exercise',
+              'Discover the numerous benefits of incorporating regular exercise into your daily routine...',
+              'assets/images/blog3.png',
+            ),
+
+            SizedBox(height: 30),
+
+            Text(
               'Contact Us',
               style: TextStyle(
                 fontSize: 22,
@@ -202,7 +273,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-
   Widget _buildCarouselSlider() {
     final List<String> imgList = [
       'assets/images/GettyImages-1370613047-600x400.jpg',
@@ -241,7 +311,6 @@ class HomeScreen extends StatelessWidget {
             ),
             SizedBox(width: 15),
             Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -275,6 +344,7 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
 
   Widget _buildHealthTipCard(String title, String description) {
     return Card(
@@ -312,6 +382,75 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildContactUsSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 30),
+        Text(
+          'Contact Us',
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF00C0FF),
+          ),
+        ),
+        SizedBox(height: 10),
+        _buildContactInfoItem('Address', '123 Health Street, City, Country'),
+        _buildContactInfoItem('Phone', '+123 456 7890'),
+        _buildContactInfoItem('Email', 'info@healthmed.com'),
+      ],
+    );
+  }
+
+  Widget _buildBlogPost(String title, String description, String imageUrl) {
+    return GestureDetector(
+      onTap: () {
+        // Add navigation logic to the full blog post page
+      },
+      child: Card(
+        margin: EdgeInsets.only(bottom: 15),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.asset(
+                  imageUrl,
+                  width: double.infinity,
+                  height: 150,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF00C0FF),
+                ),
+              ),
+              SizedBox(height: 5),
+              Text(
+                description,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[700],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

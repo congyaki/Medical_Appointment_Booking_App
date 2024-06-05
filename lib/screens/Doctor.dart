@@ -108,7 +108,7 @@ class DoctorsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Doctors in ${specialization.name}',
+          'Choose Doctor',
           style: TextStyle(
             color: Colors.white, // Màu chữ là trắng
             fontWeight: FontWeight.bold,
@@ -157,7 +157,7 @@ class DoctorsScreen extends StatelessWidget {
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
                                     fit: BoxFit.cover,
-                                    image: NetworkImage(doctors[index].avatar),
+                                    image: AssetImage(doctors[index].avatar),
                                   ),
                                 ),
                               ),

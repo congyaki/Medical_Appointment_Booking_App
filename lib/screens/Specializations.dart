@@ -22,7 +22,7 @@ class _SpecializationsScreenState extends State<SpecializationsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Specializations',
+          'Choose Specialization',
           style: TextStyle(
             color: Colors.white, // Màu chữ là trắng
             fontWeight: FontWeight.bold, // Chữ in đậm
@@ -42,17 +42,6 @@ class _SpecializationsScreenState extends State<SpecializationsScreen> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Text(
-                    'Choose Specialization',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue,
-                    ),
-                  ),
-                ),
                 Expanded(
                   child: ListView.builder(
                     itemCount: specializations.length,
