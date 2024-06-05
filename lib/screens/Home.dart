@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:doctor_app/screens/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -56,14 +57,21 @@ class HomeScreen extends StatelessWidget {
             Center(
               child: ElevatedButton(
                 onPressed: () async {
-                  final isAuthenticated = await Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                  );
-                  if (isAuthenticated != null && isAuthenticated) {
+                  final SharedPreferences prefs = await SharedPreferences.getInstance();
+                  final bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+                  if (isLoggedIn) {
                     Navigator.pushNamed(context, '/specializations');
+                  } else {
+                    final isAuthenticated = await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                    );
+                    if (isAuthenticated != null && isAuthenticated) {
+                      Navigator.pushNamed(context, '/specializations');
+                    }
                   }
                 },
+
                 style: ElevatedButton.styleFrom(
                   primary: Color(0xFF00C0FF),
                   padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),

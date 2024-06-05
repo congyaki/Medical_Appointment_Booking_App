@@ -23,6 +23,11 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  Future<void> _saveLoginStatus(bool isLoggedIn) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', isLoggedIn);
+  }
+
   void _submit() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -38,11 +43,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
         if (authResult.isAuthenticated) {
           await _saveToken(authResult.token); // Lưu token vào thiết bị
+          await _saveLoginStatus(true); // Lưu trạng thái đăng nhập
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Login successful!')),
           );
           Navigator.pop(context, true); // Trả về true khi đăng nhập thành công
-        } else {
+        }
+        else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(authResult.message ?? 'Failed to login')),
           );

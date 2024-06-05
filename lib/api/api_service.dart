@@ -22,6 +22,12 @@ class ApiService {
     await prefs.setString('token', token);
   }
 
+  Future<void> _saveLoginStatus(bool isLoggedIn) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', isLoggedIn);
+  }
+
+
   Future<AuthenticationVM> login(LoginVM loginVM) async {
     final url = Uri.parse('$baseUrl/User/token');
     final response = await http.post(
