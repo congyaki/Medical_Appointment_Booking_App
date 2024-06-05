@@ -62,32 +62,87 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Email'),
-                validator: (value) => value!.isEmpty ? 'Please enter email' : null,
-                onSaved: (value) => _email = value!,
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Password'),
-                validator: (value) => value!.isEmpty ? 'Please enter password' : null,
-                obscureText: true,
-                onSaved: (value) => _password = value!,
-              ),
-              SizedBox(height: 20),
-              _isLoading
-                  ? CircularProgressIndicator()
-                  : ElevatedButton(
-                onPressed: _submit,
-                child: Text('Login'),
-              ),
-            ],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.blue[900]!, Colors.blue[300]!],
+          ),
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 50,
+                  child: Icon(Icons.person, size: 60, color: Colors.blue[900]),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'Welcome Back!',
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
+                ),
+                SizedBox(height: 30),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        style: TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          labelText: 'Email',
+                          labelStyle: TextStyle(color: Colors.white),
+                          prefixIcon: Icon(Icons.email, color: Colors.white),
+                          border: OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                        ),
+                        validator: (value) => value!.isEmpty ? 'Please enter email' : null,
+                        onSaved: (value) => _email = value!,
+                      ),
+                      SizedBox(height: 20),
+                      TextFormField(
+                        style: TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          labelStyle: TextStyle(color: Colors.white),
+                          prefixIcon: Icon(Icons.lock, color: Colors.white),
+                          border: OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                        ),
+                        validator: (value) => value!.isEmpty ? 'Please enter password' : null,
+                        obscureText: true,
+                        onSaved: (value) => _password = value!,
+                      ),
+                      SizedBox(height: 20),
+                      _isLoading
+                          ? CircularProgressIndicator(color: Colors.white)
+                          : ElevatedButton(
+                        onPressed: _submit,
+                        child: Text(
+                          'Login',
+                          style: TextStyle(fontSize: 16, color: Colors.blue),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            side: BorderSide(color: Colors.blue, width: 2),
+                          ),
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
