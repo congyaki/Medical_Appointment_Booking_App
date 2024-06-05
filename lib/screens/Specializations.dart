@@ -20,31 +20,35 @@ class _SpecializationsScreenState extends State<SpecializationsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Specializations')),
-    body: FutureBuilder<List<SpecializationVM>>(
-    future: _specializations,
-    builder: (context, snapshot) {
-    if (snapshot.connectionState == ConnectionState.waiting) {
-    return Center(child: CircularProgressIndicator());} else if (snapshot.hasError) {
-      return Center(child: Text('Failed to load specializations: ${snapshot.error}'));
-    } else {
-      final specializations = snapshot.data!;
-      return ListView.builder(
-        itemCount: specializations.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(specializations[index].name),
-            subtitle: Text(specializations[index].description),
-            onTap: () {
-              // Xử lý khi nhấn vào một chuyên khoa
-              Navigator.pushNamed(context, '/doctors', arguments: specializations[index]);
-            },
-          );
+      appBar: AppBar(title: Text('Specializations')),
+      body: FutureBuilder<List<SpecializationVM>>(
+        future: _specializations,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Failed to load specializations: ${snapshot.error}'));
+          } else {
+            final specializations = snapshot.data!;
+            return ListView.builder(
+              itemCount: specializations.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(specializations[index].name),
+                  subtitle: Text(specializations[index].description),
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      '/doctors',
+                      arguments: specializations[index],
+                    );
+                  },
+                );
+              },
+            );
+          }
         },
-      );
-    }
-    },
-    ),
+      ),
     );
   }
 }

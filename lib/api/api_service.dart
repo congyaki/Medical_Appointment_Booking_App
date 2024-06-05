@@ -1,5 +1,6 @@
 import 'package:doctor_app/models/AppointmentVM.dart';
 import 'package:doctor_app/models/AuthenticationVM.dart';
+import 'package:doctor_app/models/DoctorBasicVM.dart';
 import 'package:doctor_app/models/DoctorVM.dart';
 import 'package:doctor_app/models/LoginVM.dart';
 import 'package:doctor_app/models/SpecializationVM.dart';
@@ -7,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ApiService {
-  static const String baseUrl = 'https://ef05-118-70-125-13.ngrok-free.app/api';
+  static const String baseUrl = 'https://2d51-118-70-125-13.ngrok-free.app/api';
 
   Future<AuthenticationVM> login(LoginVM loginVM) async {
     final url = Uri.parse('$baseUrl/User/token');
@@ -41,8 +42,20 @@ class ApiService {
     }
   }
 
+  Future<List<DoctorBasicVM>> getDoctorsBySpecializationId(int specializationId) async {
+    final url = Uri.parse('$baseUrl/Doctors/GetDoctorsBySpecizalizationId/$specializationId'); // URL chính xác
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse.map((data) => DoctorBasicVM.fromJson(data)).toList();
+    } else {
+      throw Exception('Failed to load doctors: ${response.reasonPhrase}');
+    }
+  }
+
   Future<List<DoctorVM>> fetchDoctors() async {
-    final url = Uri.parse('$baseUrl/Doctors');
+    final url = Uri.parse('$baseUrl/api/Doctors');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -54,7 +67,7 @@ class ApiService {
   }
 
   Future<void> createAppointment(AppointmentVM appointmentVM) async {
-    final url = Uri.parse('$baseUrl/Appointments');
+    final url = Uri.parse('$baseUrl/api/Appointments');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},

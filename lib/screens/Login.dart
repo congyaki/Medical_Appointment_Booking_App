@@ -10,10 +10,11 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  String _email = '';
+  String _email = 'duccong29092003@gmail.com'; // Giá trị mặc định cho email
   String _password = '';
   final ApiService _apiService = ApiService();
   bool _isLoading = false;
+  final TextEditingController _emailController = TextEditingController(text: 'duccong29092003@gmail.com');
 
   void _submit() async {
     if (_formKey.currentState!.validate()) {
@@ -61,6 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               TextFormField(
+                controller: _emailController, // Thiết lập giá trị mặc định cho email
                 decoration: InputDecoration(labelText: 'Email'),
                 validator: (value) => value!.isEmpty ? 'Please enter email' : null,
                 onSaved: (value) => _email = value!,
