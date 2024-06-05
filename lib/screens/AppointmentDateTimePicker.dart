@@ -27,7 +27,7 @@ class _AppointmentDateTimePickerState extends State<AppointmentDateTimePicker> {
       context: context,
       initialDate: _selectedDate,
       firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(Duration(days: 30)), // Chỉ cho phép chọn ngày trong vòng 30 ngày kể từ ngày hiện tại
+      lastDate: DateTime.now().add(Duration(days: 30)),
     );
     if (pickedDate != null && pickedDate != _selectedDate) {
       setState(() {
@@ -53,45 +53,59 @@ class _AppointmentDateTimePickerState extends State<AppointmentDateTimePicker> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Select Appointment Date and Time'),
+        backgroundColor: Color(0xFF00C0FF), // Màu chủ đạo của ứng dụng
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () => _selectDate(context),
-              child: Text('Select Date'),
-            ),
-            SizedBox(height: 20),
-            Text('Selected Date: ${_selectedDate.toString().substring(0, 10)}'),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => _selectTime(context),
-              child: Text('Select Time'),
-            ),
-            SizedBox(height: 20),
-            Text('Selected Time: ${_selectedTime.format(context)}'),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Xử lý khi người dùng xác nhận ngày và giờ
-                // Ví dụ: gọi hàm để tạo cuộc hẹn với ngày và giờ đã chọn
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PatientRecordScreen(
-                      doctor: widget.doctor,
-                      selectedDate: '${_selectedDate.year}-${_selectedDate.month.toString().padLeft(2, '0')}-${_selectedDate.day.toString().padLeft(2, '0')}',
-                      selectedTime: '${_selectedTime.hour}:${_selectedTime.minute}:00',
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              CircleAvatar(
+                backgroundImage: NetworkImage(widget.doctor.avatar),
+                radius: 50,
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () => _selectDate(context),
+                child: Text('Select Date'),
+              ),
+              SizedBox(height: 20),
+              Text('Selected Date: ${_selectedDate.toString().substring(0, 10)}'),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () => _selectTime(context),
+                child: Text('Select Time'),
+              ),
+              SizedBox(height: 20),
+              Text('Selected Time: ${_selectedTime.format(context)}'),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PatientRecordScreen(
+                        doctor: widget.doctor,
+                        selectedDate: '${_selectedDate.year}-${_selectedDate.month.toString().padLeft(2, '0')}-${_selectedDate.day.toString().padLeft(2, '0')}',
+                        selectedTime: '${_selectedTime.hour}:${_selectedTime.minute}:00',
+                      ),
                     ),
-                  ),
-                );
-              },
-              child: Text('Confirm Appointment'),
-            ),
-          ],
+                  );
+                },
+                child: Text(
+                  'Confirm Appointment',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xFF00C0FF), // Màu chủ đạo của ứng dụng
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
+
