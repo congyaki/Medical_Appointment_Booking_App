@@ -1,3 +1,4 @@
+import 'package:doctor_app/models/RegisterVM.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:doctor_app/models/AuthenticationVM.dart';
@@ -25,6 +26,23 @@ class ApiService {
   Future<void> _saveLoginStatus(bool isLoggedIn) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isLoggedIn', isLoggedIn);
+  }
+
+  Future<String> register(RegisterVM registerData) async {
+    final url = Uri.parse('$baseUrl/user/register');
+    final headers = {'Content-Type': 'application/json'};
+    final body = jsonEncode(registerData.toJson());
+
+    try {
+      final response = await http.post(url, headers: headers, body: body);
+      if (response.statusCode >= 200) {
+        return response.body;
+      } else {
+        throw Exception('Failed to register user: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to register user: $e');
+    }
   }
 
 

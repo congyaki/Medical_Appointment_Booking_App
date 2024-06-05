@@ -1,3 +1,4 @@
+import 'package:doctor_app/screens/Register.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_app/api/api_service.dart';
 import 'package:doctor_app/models/LoginVM.dart';
@@ -126,6 +127,35 @@ class _LoginScreenState extends State<LoginScreen> {
                         obscureText: true,
                         onSaved: (value) => _password = value!,
                       ),
+
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => RegisterScreen()),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Colors.white, // Màu của gạch chân
+                                width: 1.5, // Độ dày của gạch chân
+                              ),
+                            ),
+                          ),
+                          child: Text(
+                            'Click to register',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+
+
                       SizedBox(height: 20),
                       _isLoading
                           ? CircularProgressIndicator(color: Colors.white)
@@ -133,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: _submit,
                         child: Text(
                           'Login',
-                          style: TextStyle(fontSize: 16, color: Colors.blue),
+                          style: TextStyle(fontSize: 18, color: Colors.blue, fontWeight: FontWeight.bold),
                         ),
                         style: ElevatedButton.styleFrom(
                           primary: Colors.white,

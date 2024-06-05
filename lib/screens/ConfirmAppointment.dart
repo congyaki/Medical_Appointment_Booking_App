@@ -94,14 +94,30 @@ class ConfirmAppointmentScreen extends StatelessWidget {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text('Appointment Confirmed'),
-                              content: Text('Your appointment has been confirmed successfully!'),
+                              backgroundColor: Color(0xFF00C0FF), // Màu nền của dialog
+                              title: Text(
+                                'Appointment Confirmed',
+                                style: TextStyle(
+                                  color: Colors.white, // Màu chữ của tiêu đề
+                                ),
+                              ),
+                              content: Text(
+                                'Your appointment has been confirmed successfully!',
+                                style: TextStyle(
+                                  color: Colors.white, // Màu chữ của nội dung
+                                ),
+                              ),
                               actions: [
                                 TextButton(
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text('OK'),
+                                  child: Text(
+                                    'OK',
+                                    style: TextStyle(
+                                      color: Colors.white, // Màu chữ của nút
+                                    ),
+                                  ),
                                 ),
                               ],
                             );
