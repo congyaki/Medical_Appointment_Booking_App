@@ -37,17 +37,9 @@ class ConfirmAppointmentScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  'Appointment Details',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF00C0FF),
-                  ),
-                ),
-                SizedBox(height: 20),
                 Container(
                   padding: EdgeInsets.all(15),
+                  margin: EdgeInsets.only(bottom: 20), // Thêm margin để tạo khoảng cách giữa các phần tử
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -63,6 +55,18 @@ class ConfirmAppointmentScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // Thay đổi kiểu chữ và đặt căn giữa cho tiêu đề "Appointment Detail"
+                      Center(
+                        child: Text(
+                          'Appointment Detail',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF00C0FF),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20), // Thêm khoảng cách giữa tiêu đề và thông tin cụ thể
                       _buildInfoRow('Doctor:', doctor.fullName),
                       _buildInfoRow('Specialization:', doctor.specializationName),
                       _buildInfoRow('Date:', selectedDate),

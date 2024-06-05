@@ -53,7 +53,7 @@ class _AppointmentDateTimePickerState extends State<AppointmentDateTimePicker> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Select Appointment Date and Time',
+          'Select Date and Time',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -150,7 +150,7 @@ class _AppointmentDateTimePickerState extends State<AppointmentDateTimePicker> {
       },
       icon: Icon(Icons.check),
       label: Text(
-        'Confirm Appointment',
+        'Continue',
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       style: ElevatedButton.styleFrom(

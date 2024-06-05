@@ -54,7 +54,7 @@ class _PatientRecordScreenState extends State<PatientRecordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Patient Records',
+        title: Text('Select Patient Record',
           style: TextStyle(
             color: Colors.white, // Màu chữ là trắng
             fontWeight: FontWeight.bold, // Chữ in đậm
