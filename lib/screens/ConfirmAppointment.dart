@@ -1,8 +1,8 @@
-import 'package:doctor_app/api/api_service.dart';
 import 'package:doctor_app/models/AppointmentVM.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_app/models/DoctorBasicVM.dart';
 import 'package:doctor_app/models/PatientRecordVM.dart';
+import 'package:doctor_app/api/api_service.dart';
 
 class ConfirmAppointmentScreen extends StatelessWidget {
   final DoctorBasicVM doctor;
@@ -42,18 +42,17 @@ class ConfirmAppointmentScreen extends StatelessWidget {
               style: TextStyle(fontSize: 16),
             ),
             Text(
-              'Date: ${selectedDate}',
+              'Date: $selectedDate',
               style: TextStyle(fontSize: 16),
             ),
             Text(
-              'Time: ${selectedTime}',
+              'Time: $selectedTime',
               style: TextStyle(fontSize: 16),
             ),
             Text(
               'Patient Name: ${patientRecord.firstName} ${patientRecord.lastName}',
               style: TextStyle(fontSize: 16),
             ),
-            // Hiển thị thông tin bệnh nhân khác ở đây nếu cần
             SizedBox(height: 30),
             ElevatedButton(
               onPressed: () async {
@@ -67,7 +66,8 @@ class ConfirmAppointmentScreen extends StatelessWidget {
 
                   await ApiService().createAppointment(appointment);
 
-                  // Hiển thị thông báo xác nhận thành công
+                  // Sau khi đặt lịch thành công, quay về trang Home và hiển thị thông báo thành công
+                  Navigator.of(context).popUntil((route) => route.isFirst);
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -77,12 +77,7 @@ class ConfirmAppointmentScreen extends StatelessWidget {
                         actions: [
                           TextButton(
                             onPressed: () {
-                              // Điều hướng đến trang Home
-                              Navigator.pushNamedAndRemoveUntil(
-                                context,
-                                '/home', // Đường dẫn đến trang Home
-                                    (Route<dynamic> route) => false, // Xóa tất cả các màn hình khỏi stack và đặt trang Home làm màn hình hiện tại
-                              );
+                              Navigator.of(context).pop(); // Đóng hộp thoại
                             },
                             child: Text('OK'),
                           ),
@@ -98,8 +93,6 @@ class ConfirmAppointmentScreen extends StatelessWidget {
               },
               child: Text('Confirm'),
             ),
-
-
           ],
         ),
       ),

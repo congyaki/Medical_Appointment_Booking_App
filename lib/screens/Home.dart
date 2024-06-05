@@ -33,13 +33,11 @@ class HomeScreen extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () async {
-                // Kiểm tra đăng nhập, nếu chưa đăng nhập thì chuyển tới trang đăng nhập
                 final isAuthenticated = await Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => LoginScreen()),
                 );
                 if (isAuthenticated != null && isAuthenticated) {
-                  // Nếu đăng nhập thành công, chuyển hướng tới trang chọn chuyên khoa
                   Navigator.pushNamed(context, '/specializations');
                 }
               },
