@@ -36,7 +36,6 @@ class _PatientRecordScreenState extends State<PatientRecordScreen> {
   }
 
   void _confirmAppointment(PatientRecordVM patientRecord) {
-    // Chuyển hướng sang trang ConfirmAppointment và truyền dữ liệu cần thiết
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -53,7 +52,15 @@ class _PatientRecordScreenState extends State<PatientRecordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Patient Records')),
+      appBar: AppBar(
+        title: Text('Patient Records',
+          style: TextStyle(
+            color: Colors.white, // Màu chữ là trắng
+            fontWeight: FontWeight.bold, // Chữ in đậm
+          ),
+        ),
+        backgroundColor: Color(0xFF00C0FF),
+      ),
       body: FutureBuilder<List<PatientRecordVM>>(
         future: _patientRecords,
         builder: (context, snapshot) {
@@ -64,25 +71,40 @@ class _PatientRecordScreenState extends State<PatientRecordScreen> {
           } else {
             final patientRecords = snapshot.data!;
             return ListView.builder(
+              padding: EdgeInsets.all(10.0),
               itemCount: patientRecords.length,
               itemBuilder: (context, index) {
                 final patientRecord = patientRecords[index];
-                return ListTile(
-                  title: Text('Name: ${patientRecord.firstName} ${patientRecord.lastName}'),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Date of Birth: ${patientRecord.dateOfBirth}'),
-                      Text('Gender: ${patientRecord.gender}'),
-                      Text('Address: ${patientRecord.address}'),
-                      Text('Phone Number: ${patientRecord.phoneNumber}'),
-                      Text('Email: ${patientRecord.email}'),
-                    ],
+                return Card(
+                  elevation: 5,
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
                   ),
-                  onTap: () {
-                    // Khi người dùng chọn một hồ sơ bệnh nhân, gọi hàm _confirmAppointment
-                    _confirmAppointment(patientRecord);
-                  },
+                  child: ListTile(
+                    contentPadding: EdgeInsets.all(15),
+                    title: Text(
+                      '${patientRecord.firstName} ${patientRecord.lastName}',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Padding(
+                      padding: EdgeInsets.only(top: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Date of Birth: ${patientRecord.dateOfBirth}'),
+                          Text('Gender: ${patientRecord.gender}'),
+                          Text('Address: ${patientRecord.address}'),
+                          Text('Phone Number: ${patientRecord.phoneNumber}'),
+                          Text('Email: ${patientRecord.email}'),
+                        ],
+                      ),
+                    ),
+                    trailing: Icon(Icons.arrow_forward, color: Color(0xFF00C0FF)),
+                    onTap: () {
+                      _confirmAppointment(patientRecord);
+                    },
+                  ),
                 );
               },
             );
@@ -92,4 +114,3 @@ class _PatientRecordScreenState extends State<PatientRecordScreen> {
     );
   }
 }
-
