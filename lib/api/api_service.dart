@@ -11,7 +11,7 @@ import 'package:doctor_app/models/PatientRecordVM.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
-  static const String baseUrl = 'https://71ac-2405-4802-1bae-910-7cde-fc9-1523-928d.ngrok-free.app/api';
+  static const String baseUrl = 'https://dc8f-183-80-251-51.ngrok-free.app/api';
 
   Future<String?> _getToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

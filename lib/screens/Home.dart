@@ -124,7 +124,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  'Bắt đầu đặt lịch',
+                  'Start Booking',
                   style: TextStyle(
                     fontSize: 18,
                     color: Colors.white,

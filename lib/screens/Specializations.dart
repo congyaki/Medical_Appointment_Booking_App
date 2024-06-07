@@ -84,25 +84,29 @@ class _SpecializationsScreenState extends State<SpecializationsScreen> {
                   color: Colors.blue,
                 ),
                 SizedBox(width: 15),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      specialization.name,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                Expanded( // Thêm Expanded ở đây
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        specialization.name,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      specialization.description,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey[700],
+                      SizedBox(height: 5),
+                      Text(
+                        specialization.description,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey[700],
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),

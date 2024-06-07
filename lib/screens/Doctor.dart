@@ -33,7 +33,7 @@ class DoctorsScreen extends StatelessWidget {
                 Navigator.of(context).pop(false); // Đóng hộp thoại và trả về giá trị false
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.grey,
+                primary: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
